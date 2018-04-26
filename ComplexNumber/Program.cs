@@ -130,13 +130,8 @@ namespace ComplexNumber
         public static explicit operator double(Complex c)
         {
             return c.a;
-        }
-
-
-
+        }
     }
-
-
 
 
 
