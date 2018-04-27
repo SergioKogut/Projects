@@ -2,9 +2,37 @@
 #include<thread> //Файл в котором определен класс thread 
 #include<string>
 #include<chrono> 
+#include <Windows.h>
+
 using namespace std;
 
+void SetTextColor(int color, string text)
+{
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
+	cout << text << endl;
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 14);
+
+}
+void SetColorNumber(int color )
+{
+	
+	for (int i = 0; i < 100; i++)
+	{
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
+		cout << " "<< i << " ";
+		//SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 14);
+	}
+
+
+}
+
+
 void Function(string NameThread) {
+	for (int i = 0; i < 100; i++)
+	{
+		SetTextColor(10, to_string(i));
+	}
+	
 	cout << "Thread function: " << NameThread << endl;
 }
 
@@ -29,14 +57,17 @@ int main()
 {
 	//-----------------------------------------------------------------------------------------------
 	thread::id id;
-		
-	thread func_thread(Function,"Tread 1"); // сворюємо потік
-	this_thread::sleep_for(chrono::seconds(1));
-	id = func_thread.get_id();
-	cout << "ID Thread 1:"<<id<<endl;
-	Function("Main Thread");
-	if (func_thread.joinable())//
-		func_thread.join(); //після виконання приєднуємо потік до основного
+	thread func_thread1(SetColorNumber,10); // сворюємо потік 1
+	thread func_thread2(SetColorNumber, 11); // сворюємо потік 2
+
+	 //this_thread::sleep_for(chrono::seconds(1));
+	//id = func_thread.get_id();
+	//cout << "ID Thread 1:"<<id<<endl;
+	SetColorNumber(12);
+	if (func_thread1.joinable())//
+		func_thread1.join(); //після виконання приєднуємо потік до основного
+	if (func_thread2.joinable())//
+		func_thread2.join(); //після виконання приєднуємо потік до основного
 	// Выполнение возвращается функции main когда поток заканчивается 
 	// func_thread.detach(); В этом случае поток заканчивается принудительно 
 
